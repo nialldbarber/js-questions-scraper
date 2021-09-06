@@ -49,9 +49,14 @@ async function getRandomQuestion() {
     const questions = await getData();
 
     if (questions?.hasLoaded) {
-      console.log("Loaded! Carry on!");
+      // loop through questions and select one at random
+      const { allQuestions } = questions.data;
+      const randomQuestion =
+        allQuestions[Math.floor(Math.random() * allQuestions.length)];
+
+      console.log(`${randomQuestion.question}?`);
     } else {
-      console.log("Dang! Not loaded!");
+      console.log("Dang! How did you get this far?!");
     }
   } catch (err) {
     console.log(err);
