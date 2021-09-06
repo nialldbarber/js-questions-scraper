@@ -17,7 +17,7 @@ interface DataT {
 
 const baseUrl = "https://github.com/sudheerj/javascript-interview-questions";
 
-const rando = (arr: Array<string | number | QuestionsT>) =>
+const rando = (arr: Array<QuestionsT>) =>
   Math.floor(Math.random() * arr.length);
 
 const formatLog = (log: string): void =>
@@ -40,14 +40,15 @@ async function getData() {
     const $ = cheerio.load(html);
     const questions = $("tr").find("a");
 
+    // find questions
     for (let i = 0; i < questions.length; i++) {
       data.allQuestions.push({
         question: questions.eq(i).text(),
       });
     }
 
+    // we're done, exit all processes
     hasLoaded = true;
-
     await browser.close();
     return { hasLoaded, data };
   } catch (err) {
@@ -59,12 +60,10 @@ async function getData() {
 async function getRandomQuestion() {
   try {
     const questions = await getData();
-
     if (questions?.hasLoaded) {
       // loop through questions and select one at random
       const { allQuestions } = questions.data;
       const { question } = allQuestions[rando(allQuestions)];
-
       formatLog(question);
     } else {
       console.log("Dang! How did you get this far?!");
