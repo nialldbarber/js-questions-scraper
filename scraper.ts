@@ -57,6 +57,7 @@ async function getData() {
   }
 }
 
+// get language type for different questions
 async function getLanguageType(): Promise<string> {
   const ask = new Ask();
   const types = await ask.prompt([
@@ -89,6 +90,7 @@ async function getRandomQuestion() {
   }
 }
 
+// bring them all together and begin!
 async function begin() {
   try {
     const types = await getLanguageType();
