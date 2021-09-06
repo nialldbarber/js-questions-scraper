@@ -16,8 +16,10 @@ type DataT = {
   allQuestions: QuestionsT[];
 };
 
+// js questions
 const baseUrl = "https://github.com/sudheerj/javascript-interview-questions";
 
+// helpers functions
 const rando = (arr: QuestionsT[]): number =>
   Math.floor(Math.random() * arr.length);
 
