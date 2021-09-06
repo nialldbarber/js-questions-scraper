@@ -11,9 +11,9 @@ type QuestionsT = {
   question: string;
 };
 
-interface DataT {
+type DataT = {
   allQuestions: QuestionsT[];
-}
+};
 
 const baseUrl = "https://github.com/sudheerj/javascript-interview-questions";
 
@@ -63,6 +63,7 @@ async function getRandomQuestion() {
       // loop through questions and select one at random
       const { allQuestions } = questions.data;
       const { question } = allQuestions[rando(allQuestions)];
+      // log question
       formatLog(question);
     } else {
       console.log("Dang! How did you get this far?!");
