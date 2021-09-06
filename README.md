@@ -2,6 +2,8 @@
 
 I made a quick Deno scraper to grab questions from [this repo](https://github.com/sudheerj/javascript-interview-questions)
 
+## Installation
+
 To get it up and running:
 
 Firstly, you'll need Deno [installed](https://deno.land/manual/getting_started/installation)
@@ -24,7 +26,7 @@ Using PowerShell (Windows):
 iwr https://deno.land/x/install/install.ps1 -useb | iex
 ```
 
----
+## Running script
 
 🔥 Then just run the script 🔥
 
