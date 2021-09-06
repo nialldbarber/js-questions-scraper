@@ -51,10 +51,10 @@ async function getRandomQuestion() {
     if (questions?.hasLoaded) {
       // loop through questions and select one at random
       const { allQuestions } = questions.data;
-      const randomQuestion =
+      const { question } =
         allQuestions[Math.floor(Math.random() * allQuestions.length)];
 
-      console.log(`${randomQuestion.question}?`);
+      console.log(`${question}?`);
     } else {
       console.log("Dang! How did you get this far?!");
     }
