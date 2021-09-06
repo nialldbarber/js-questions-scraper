@@ -24,7 +24,9 @@ Using PowerShell (Windows):
 iwr https://deno.land/x/install/install.ps1 -useb | iex
 ```
 
-Then just run the script:
+---
+
+🔥 Then just run the script 🔥
 
 ```bash
 deno run --unstable --allow-all scraper.ts
