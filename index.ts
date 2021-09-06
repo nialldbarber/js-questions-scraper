@@ -4,57 +4,57 @@ import { cheerio } from "https://deno.land/x/cheerio@1.0.4/mod.ts";
 const baseUrl = "https://github.com/sudheerj/javascript-interview-questions";
 
 type QuestionsT = {
-	question: string;
+  question: string;
 };
 
 interface DataT {
-	allQuestions: QuestionsT[];
+  allQuestions: QuestionsT[];
 }
 
 // fetch questions from github page
 async function getData() {
-	let hasLoaded = false;
-	const data: DataT = {
-		allQuestions: [],
-	};
+  let hasLoaded = false;
+  const data: DataT = {
+    allQuestions: [],
+  };
 
-	try {
-		// get page
-		const browser = await puppeteer.launch();
-		const page = await browser.newPage();
-		await page.goto(baseUrl, { waitUntil: "networkidle2" });
-		// scrape data
-		const html = await page.content();
-		const $ = cheerio.load(html);
-		const questions = $("tr").find("a");
+  try {
+    // get page
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(baseUrl, { waitUntil: "networkidle2" });
+    // scrape data
+    const html = await page.content();
+    const $ = cheerio.load(html);
+    const questions = $("tr").find("a");
 
-		for (let i = 0; i < questions.length; i++) {
-			data.allQuestions.push({
-				question: questions.eq(i).text(),
-			});
-		}
+    for (let i = 0; i < questions.length; i++) {
+      data.allQuestions.push({
+        question: questions.eq(i).text(),
+      });
+    }
 
-		hasLoaded = true;
+    hasLoaded = true;
 
-		await browser.close();
-		return { hasLoaded, data };
-	} catch (err) {
-		console.log(err);
-	}
+    await browser.close();
+    return { hasLoaded, data };
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 // pluck a random question from the list and log it
 async function getRandomQuestion() {
-	try {
-		const data = await getData();
+  try {
+    const questions = await getData();
 
-		if (data?.hasLoaded) {
-			console.log("Loaded! Carry on!");
-		} else {
-			console.log("Dang! Not loaded!");
-		}
-	} catch (err) {
-		console.log(err);
-	}
+    if (questions?.hasLoaded) {
+      console.log("Loaded! Carry on!");
+    } else {
+      console.log("Dang! Not loaded!");
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 getRandomQuestion();
