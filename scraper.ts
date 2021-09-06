@@ -1,7 +1,11 @@
 import puppeteer from "https://deno.land/x/puppeteer@9.0.1/mod.ts";
 import { cheerio } from "https://deno.land/x/cheerio@1.0.4/mod.ts";
-
-const baseUrl = "https://github.com/sudheerj/javascript-interview-questions";
+import {
+  gray,
+  bgBrightMagenta,
+  bold,
+  italic,
+} from "https://deno.land/std@0.106.0/fmt/colors.ts";
 
 type QuestionsT = {
   question: string;
@@ -10,6 +14,14 @@ type QuestionsT = {
 interface DataT {
   allQuestions: QuestionsT[];
 }
+
+const baseUrl = "https://github.com/sudheerj/javascript-interview-questions";
+
+const rando = (arr: Array<string | number | QuestionsT>) =>
+  Math.floor(Math.random() * arr.length);
+
+const formatLog = (log: string): void =>
+  console.log(italic(bold(gray(bgBrightMagenta(log)))));
 
 // fetch questions from github page
 async function getData() {
@@ -51,10 +63,9 @@ async function getRandomQuestion() {
     if (questions?.hasLoaded) {
       // loop through questions and select one at random
       const { allQuestions } = questions.data;
-      const { question } =
-        allQuestions[Math.floor(Math.random() * allQuestions.length)];
+      const { question } = allQuestions[rando(allQuestions)];
 
-      console.log(`${question}?`);
+      formatLog(question);
     } else {
       console.log("Dang! How did you get this far?!");
     }
