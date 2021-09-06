@@ -73,7 +73,7 @@ async function getLanguageType(): Promise<string> {
 }
 
 // pluck a random question from the list and log it
-async function getRandomQuestion() {
+async function getRandomQuestion(): Promise<void> {
   try {
     const questions = await getData();
 
@@ -93,7 +93,7 @@ async function getRandomQuestion() {
 }
 
 // bring them all together and begin!
-async function begin() {
+async function begin(): Promise<void> {
   try {
     const types = await getLanguageType();
     console.log(types);
