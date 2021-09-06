@@ -93,7 +93,7 @@ async function getRandomQuestion(): Promise<void> {
 }
 
 // bring them all together and begin!
-async function begin(): Promise<void> {
+(async function (): Promise<void> {
   try {
     const types = await getLanguageType();
     console.log(types);
@@ -106,5 +106,4 @@ async function begin(): Promise<void> {
   } catch (err) {
     console.log(err);
   }
-}
-begin();
+})();
