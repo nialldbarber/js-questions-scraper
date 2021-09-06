@@ -17,8 +17,7 @@ interface DataT {
 
 const baseUrl = "https://github.com/sudheerj/javascript-interview-questions";
 
-const rando = (arr: Array<QuestionsT>) =>
-  Math.floor(Math.random() * arr.length);
+const rando = (arr: QuestionsT[]) => Math.floor(Math.random() * arr.length);
 
 const formatLog = (log: string): void =>
   console.log(italic(bold(gray(bgBrightMagenta(log)))));
