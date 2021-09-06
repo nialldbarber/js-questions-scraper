@@ -6,6 +6,7 @@ import {
   bold,
   italic,
 } from "https://deno.land/std@0.106.0/fmt/colors.ts";
+import Ask from "https://deno.land/x/ask@1.0.5/mod.ts";
 
 type QuestionsT = {
   question: string;
@@ -17,7 +18,8 @@ type DataT = {
 
 const baseUrl = "https://github.com/sudheerj/javascript-interview-questions";
 
-const rando = (arr: QuestionsT[]) => Math.floor(Math.random() * arr.length);
+const rando = (arr: QuestionsT[]): number =>
+  Math.floor(Math.random() * arr.length);
 
 const formatLog = (log: string): void =>
   console.log(italic(bold(gray(bgBrightMagenta(log)))));
@@ -55,14 +57,28 @@ async function getData() {
   }
 }
 
+async function getLanguageType(): Promise<string> {
+  const ask = new Ask();
+  const types = await ask.prompt([
+    {
+      name: "lang",
+      type: "input",
+      message: "JS/HTML/CSS?",
+    },
+  ]);
+  return types.lang.toLowerCase();
+}
+
 // pluck a random question from the list and log it
 async function getRandomQuestion() {
   try {
     const questions = await getData();
+
     if (questions?.hasLoaded) {
       // loop through questions and select one at random
       const { allQuestions } = questions.data;
       const { question } = allQuestions[rando(allQuestions)];
+
       // log question
       formatLog(question);
     } else {
@@ -72,4 +88,19 @@ async function getRandomQuestion() {
     console.log(err);
   }
 }
-getRandomQuestion();
+
+async function begin() {
+  try {
+    const types = await getLanguageType();
+    console.log(types);
+
+    if (types === "js" || types === "JS") {
+      getRandomQuestion();
+    } else {
+      console.log("Whoops, haven't set that up yet!");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+begin();
