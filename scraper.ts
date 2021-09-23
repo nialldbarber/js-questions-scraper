@@ -19,7 +19,7 @@ const baseUrl = "https://github.com/sudheerj/javascript-interview-questions";
 const rando = (arr: QuestionsT[]): number =>
   Math.floor(Math.random() * arr.length);
 
-const formatLog = (log: string): void =>
+const log = (log: string): void =>
   console.log(italic(bold(gray(bgBrightMagenta(log)))));
 
 // fetch questions from github page
@@ -77,7 +77,7 @@ async function getRandomQuestion(): Promise<void> {
       const { question } = qs[rando(qs)];
 
       // log question
-      formatLog(question);
+      log(question);
     } else {
       console.log("Dang! How did you get this far?!");
     }
