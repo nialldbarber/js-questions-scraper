@@ -12,8 +12,11 @@ type QuestionsT = {
   question: string;
 };
 
-// js questions
-const baseUrl = "https://github.com/sudheerj/javascript-interview-questions";
+// questions
+const BASE_URL = {
+  js: "https://github.com/sudheerj/javascript-interview-questions",
+  css: "https://github.com/Devinterview-io/css-interview-questions",
+};
 
 // helpers functions
 const rando = (arr: QuestionsT[]): number =>
@@ -23,7 +26,7 @@ const log = (log: string): void =>
   console.log(italic(bold(gray(bgBrightMagenta(log)))));
 
 // fetch questions from github page
-async function getData() {
+async function getData(type: string, targetContainer: string, target: string) {
   let hasLoaded = false;
   const data: QuestionsT[] = [];
 
@@ -31,11 +34,11 @@ async function getData() {
     // get page
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto(baseUrl, { waitUntil: "networkidle2" });
+    await page.goto(type, { waitUntil: "networkidle2" });
     // scrape data
     const html = await page.content();
     const $ = cheerio.load(html);
-    const questions = $("tr").find("a");
+    const questions = $(targetContainer).find(target);
 
     // find questions
     for (let i = 0; i < questions.length; i++) {
@@ -66,9 +69,13 @@ async function getLanguageType(): Promise<string> {
 }
 
 // pluck a random question from the list and log it
-async function getRandomQuestion(): Promise<void> {
+async function getRandomQuestion(
+  type: string,
+  targetContainer: string,
+  target: string
+): Promise<void> {
   try {
-    const questions = await getData();
+    const questions = await getData(type, targetContainer, target);
 
     if (questions?.hasLoaded) {
       // loop through questions and select one at random
@@ -89,10 +96,11 @@ async function getRandomQuestion(): Promise<void> {
 (async function (): Promise<void> {
   try {
     const types = await getLanguageType();
-    console.log(types);
 
-    if (types === "js" || types === "JS") {
-      getRandomQuestion();
+    if (types === "js") {
+      getRandomQuestion(BASE_URL["js"], "tr", "a");
+    } else if (types === "css") {
+      getRandomQuestion(BASE_URL["css"], "article", "h2");
     } else {
       console.log("Whoops, haven't set that up yet!");
     }
