@@ -62,7 +62,7 @@ async function getLanguageType(): Promise<string> {
     {
       name: "lang",
       type: "input",
-      message: "JS/HTML/CSS?",
+      message: "JS/CSS?",
     },
   ]);
   return types.lang.toLowerCase();
