@@ -39,7 +39,8 @@ async function getData() {
 
     // find questions
     for (let i = 0; i < questions.length; i++) {
-      data.push({ question: questions.eq(i).text() });
+      let question = questions.eq(i).text();
+      data.push({ question });
     }
 
     // we're done, exit all processes
