@@ -12,10 +12,6 @@ type QuestionsT = {
   question: string;
 };
 
-type DataT = {
-  allQuestions: QuestionsT[];
-};
-
 // js questions
 const baseUrl = "https://github.com/sudheerj/javascript-interview-questions";
 
@@ -29,9 +25,7 @@ const formatLog = (log: string): void =>
 // fetch questions from github page
 async function getData() {
   let hasLoaded = false;
-  const data: DataT = {
-    allQuestions: [],
-  };
+  const data: QuestionsT[] = [];
 
   try {
     // get page
@@ -45,7 +39,7 @@ async function getData() {
 
     // find questions
     for (let i = 0; i < questions.length; i++) {
-      data.allQuestions.push({
+      data.push({
         question: questions.eq(i).text(),
       });
     }
@@ -79,8 +73,8 @@ async function getRandomQuestion(): Promise<void> {
 
     if (questions?.hasLoaded) {
       // loop through questions and select one at random
-      const { allQuestions } = questions.data;
-      const { question } = allQuestions[rando(allQuestions)];
+      const qs = questions.data;
+      const { question } = qs[rando(qs)];
 
       // log question
       formatLog(question);
